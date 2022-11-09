@@ -1,0 +1,23 @@
+{
+  "name": "study-group-api",
+  "version": "1.0.0",
+  "description": "API para o sistema de grupo de estudos.",
+  "main": "index.js",
+  "author": "Pedro Emanuel",
+  "license": "MIT",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "bcrypt": "^5.1.0",
+    "cors": "^2.8.5",
+    "express": "^4.18.2",
+    "fs": "^0.0.1-security",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^6.7.2",
+    "multer": "^1.4.5-lts.1"
+  },
+  "devDependencies": {
+    "dotenv": "^16.0.3"
+  }
+}
