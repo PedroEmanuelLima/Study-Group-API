@@ -1,13 +1,11 @@
 const dotenv = require("dotenv").config();
 const mongoose = require('mongoose');
 const express = require('express');
-const multer = require('multer');
 const path = require('path');
 const cors = require('cors');
 
 const app = express();
 
-const storage = require('./src/config/MulterConfig');
 const RouterEstudante = require('./src/Routes/Estudante');
 
 try{

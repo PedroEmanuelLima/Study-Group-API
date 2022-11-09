@@ -66,7 +66,7 @@ module.exports = {
         const filtro = { email: email};
         const atualizacao = { imagemPerfil: destination+filename }
         try {
-            const estudante = await Character.findOneAndUpdate(filtro, atualizacao);
+            const estudante = await Character.findOneAndUpdate(filtro, atualizacao, {rawResult: true});
             fs.unlink(path, function (err) {
                 if (err) throw err;
                 return;
