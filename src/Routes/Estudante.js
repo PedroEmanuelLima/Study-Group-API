@@ -1,7 +1,6 @@
 const EstudanteRoutes = require('express').Router();
 const multer = require('multer');
 
-const Estudante = require('../models/Estudante');
 const EstudanteController = require('../controllers/EstudanteController');
 const MulterConfig = require('../config/MulterConfig')
 

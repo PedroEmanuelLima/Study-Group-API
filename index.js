@@ -6,7 +6,7 @@ const cors = require('cors');
 
 const app = express();
 
-const RouterEstudante = require('./src/Routes/Estudante');
+const EstudanteRoutes = require('./src/Routes/Estudante');
 
 try{
     mongoose.connect(process.env.DB_STR_CON);
@@ -21,7 +21,7 @@ app.get('/', (req, res) => {
     res.status(200).sendFile(path.join(__dirname, '/src/page/info.html'));
 });
 
-app.use(RouterEstudante);
+app.use(EstudanteRoutes);
 
 app.listen(process.env.PORT || 3000, () => {
     console.log('Server start!')
