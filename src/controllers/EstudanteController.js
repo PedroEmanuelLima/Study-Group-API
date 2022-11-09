@@ -2,7 +2,9 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const fs = require('fs');
 
+const cloudinary = require('../config/CloudinaryConfig');
 const Estudante = require('../models/Estudante');
+const Resource = require('../models/Resource');
 
 const generateToken = (params = {}) => {
     return jwt.sign(params, process.env.SECRET, {
@@ -38,19 +40,39 @@ module.exports = {
     
     async create(req, res) {
         const { nome, email, senha } = req.body;
-        const { destination, filename } = req.file;
+        const file = req.file;
 
         try {
             if( await Estudante.findOne({ email: email })) {
                 return res.status(400).json({ error: 'Estudante já existe' })
             }
 
-            const estudante = await Estudante.create({
-                nome,
-                email,
-                senha,
-                imagemPerfil: destination+filename,
-            });
+            if (file) {
+                // create resource
+
+                const uploadResult = await cloudinary.uploader.upload(file.path,{ folder: "study-group"}, (error) => {
+                    if(error) {
+                        return res.status(400).send({ error: 'Flha no upload de imagem' });
+                    }
+                });
+
+                const resource = await Resource.create({
+                    cloudinary_id: uploadResult.public_id,
+                    secure_url: uploadResult.secure_url
+                });
+
+                const data = {
+                    nome, email, senha,
+                    resource: resource._id
+                }
+            
+                const estudante = await Estudante.create(data);
+
+                estudante.senha = undefined;
+                return res.status(200).json( estudante );
+            }
+
+            const estudante = await Estudante.create({ nome, email, senha });
 
             estudante.senha = undefined;
             return res.status(200).json( estudante );
