@@ -1,6 +1,5 @@
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
-const fs = require('fs');
 
 const cloudinary = require('../config/CloudinaryConfig');
 const Estudante = require('../models/Estudante');
@@ -15,9 +14,8 @@ const generateToken = (params = {}) => {
 module.exports = {
     async login(req, res) {
         const { email, senha } = req.body;
-
         try {
-            const estudante = await Estudante.findOne({ email: email }).select('+password');
+            const estudante = await Estudante.findOne({ email: email }).select('+password').populate("resource");
 
             if(!estudante) {
                 return res.status(404).json({ error: 'Conta não encontrada' });
@@ -52,7 +50,7 @@ module.exports = {
 
                 const uploadResult = await cloudinary.uploader.upload(file.path,{ folder: "study-group"}, (error) => {
                     if(error) {
-                        return res.status(400).send({ error: 'Flha no upload de imagem' });
+                        return res.status(400).send({ error: 'Falha no upload de imagem' });
                     }
                 });
 
@@ -82,17 +80,36 @@ module.exports = {
     },
 
     async modifyImage(req, res) {
-        const { destination, filename } = req.file;
-        const { path, email } = req.body;
+        const { estudanteId } = req.body;
+        const file = req.file;
 
-        const filtro = { email: email};
-        const atualizacao = { imagemPerfil: destination+filename }
+        let estudante = await Estudante.findById({_id: estudanteId}).populate("resource");
+
         try {
-            const estudante = await Character.findOneAndUpdate(filtro, atualizacao, {rawResult: true});
-            fs.unlink(path, function (err) {
-                if (err) throw err;
-                return;
-            });
+            if(estudante.resource) {
+                await cloudinary.uploader.destroy(estudante.resource.cloudinary_id);
+                const uploadResult = await cloudinary.uploader.upload(file.path, { folder: "study-group"});
+
+                await Resource.updateOne(
+                    { _id: estudante.resource._id },
+                    { 
+                        cloudinary_id: uploadResult.public_id,
+                        secure_url: uploadResult.secure_url  
+                    });
+            } else {
+                const uploadResult = await cloudinary.uploader.upload(file.path, { folder: "study-group"}, (error) => {
+                    if(error) {
+                        return res.status(400).send({ error: 'Fail to upload image' });
+                    }
+                })
+                const resource = await Resource.create({
+                    cloudinary_id: uploadResult.public_id,
+                    secure_url: uploadResult.secure_url
+                })
+                estudante = await (await Estudante.findByIdAndUpdate({_id: estudanteId}, {resource: resource._id}, {rawResult: true})).value;
+            }
+
+            console.log(estudante)
             res.status(200).json(estudante);
         } catch (err) {
             return res.status(500).json({error: "Tente mais tarde", err})

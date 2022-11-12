@@ -1,11 +1,9 @@
-const EstudanteRoutes = require('express').Router();
+const GrupoRoutes = require('express').Router();
+const GrupoController = require('../controllers/GrupoController');
 
-const Estudante = require('../models/Grupo');
-const EstudanteController = require('../controllers/GrupoController');
+GrupoRoutes.post('/create', GrupoController.createGroup);
+GrupoRoutes.post('/entrar', GrupoController.joinGroup);
+GrupoRoutes.post('/meus', GrupoController.myGroups);
+GrupoRoutes.post('/', GrupoController.allGroups);
 
-EstudanteRoutes.post('/create', EstudanteController.create);
-EstudanteRoutes.patch('/modifyImage',
-    multer({storage: MulterConfig}).single("imagemPerfil"),
-    EstudanteController.modifyImage);
-
-module.exports = EstudanteRoutes;
+module.exports = GrupoRoutes;
