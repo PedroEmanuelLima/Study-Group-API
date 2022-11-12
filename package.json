@@ -6,7 +6,8 @@
   "author": "Pedro Emanuel",
   "license": "MIT",
   "scripts": {
-    "start": "node index.js"
+    "start": "node index.js",
+    "dev": "nodemon index.js"
   },
   "dependencies": {
     "bcrypt": "^5.1.0",
@@ -19,5 +20,7 @@
     "mongoose": "^6.7.2",
     "multer": "^1.4.5-lts.1"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "nodemon": "^2.0.20"
+  }
 }
