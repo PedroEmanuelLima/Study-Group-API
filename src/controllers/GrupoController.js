@@ -51,11 +51,11 @@ const GrupoService = require('../services/GrupoService');
 
 router.route('/Grupo')
       .get(GrupoService.ListarGrupo)
-      .post(GrupoService.CrearGrupo);
+      .post(GrupoService.CriarGrupo);
 
 router.route('/Grupo/:id')
-      .get(GrupoService.obtenerGrupoId)
-      .put(GrupoService.actualizarGrupo)
+      .get(GrupoService.obterGrupoId)
+      .put(GrupoService.atualizarGrupo)
       .delete(GrupoService.eliminarGrupo);      
 
 
