@@ -41,24 +41,3 @@ module.exports = {
         }
     }
 }
-
-const express = require('express');
-const router = express.Router();
-
-
-const GrupoService = require('../services/GrupoService');
-
-
-router.route('/Grupo')
-      .get(GrupoService.ListarGrupo)
-      .post(GrupoService.CriarGrupo);
-
-router.route('/Grupo/:id')
-      .get(GrupoService.obterGrupoId)
-      .put(GrupoService.atualizarGrupo)
-      .delete(GrupoService.eliminarGrupo);      
-
-
-     
-     
- module.exports = router;
