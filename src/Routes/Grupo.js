@@ -3,7 +3,8 @@ const GrupoController = require('../controllers/GrupoController');
 
 GrupoRoutes.post('/create', GrupoController.createGroup);
 GrupoRoutes.post('/entrar', GrupoController.joinGroup);
-GrupoRoutes.post('/meus', GrupoController.myGroups);
-GrupoRoutes.post('/', GrupoController.allGroups);
+GrupoRoutes.delete('/sair', GrupoController.leaveGroup);
+GrupoRoutes.get('/meus/:id', GrupoController.myGroups);
+GrupoRoutes.get('/:id', GrupoController.allGroups);
 
 module.exports = GrupoRoutes;

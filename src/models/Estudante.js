@@ -17,7 +17,7 @@ const EstudanteSchema = mongoose.Schema({
     },
     resource: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Resource', required: false
+        ref: 'Resource', require: false
     },
 });
 

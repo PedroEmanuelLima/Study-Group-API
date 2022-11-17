@@ -18,11 +18,11 @@ module.exports = {
             const estudante = await Estudante.findOne({ email: email }).select('+password').populate("resource");
 
             if(!estudante) {
-                return res.status(404).json({ error: 'Conta não encontrada' });
+                return res.status(404).json({ message: 'Conta não encontrada' });
             }
 
             if(! await bcrypt.compare(senha, estudante.senha)) {
-                return res.status(400).json({ error: 'Senha incorreta' });
+                return res.status(400).json({ message: 'Senha incorreta' });
             }
 
             estudante.password = undefined;
@@ -42,7 +42,7 @@ module.exports = {
 
         try {
             if( await Estudante.findOne({ email: email })) {
-                return res.status(400).json({ error: 'Estudante já existe' })
+                return res.status(400).json({ message: 'Estudante já existe' })
             }
 
             if (file) {
@@ -50,7 +50,7 @@ module.exports = {
 
                 const uploadResult = await cloudinary.uploader.upload(file.path,{ folder: "study-group"}, (error) => {
                     if(error) {
-                        return res.status(400).send({ error: 'Falha no upload de imagem' });
+                        return res.status(400).send({ message: 'Falha no upload de imagem' });
                     }
                 });
 
@@ -75,7 +75,7 @@ module.exports = {
             estudante.senha = undefined;
             return res.status(200).json( estudante );
         }catch(err) {
-            return res.status(401).json({ error: 'Falha na criação de novo estudante', err });
+            return res.status(401).json({ message: 'Falha na criação de novo estudante', err });
         }
     },
 
@@ -99,7 +99,7 @@ module.exports = {
             } else {
                 const uploadResult = await cloudinary.uploader.upload(file.path, { folder: "study-group"}, (error) => {
                     if(error) {
-                        return res.status(400).send({ error: 'Fail to upload image' });
+                        return res.status(400).send({ message: 'Fail to upload image' });
                     }
                 })
                 const resource = await Resource.create({
@@ -112,7 +112,7 @@ module.exports = {
             console.log(estudante)
             res.status(200).json(estudante);
         } catch (err) {
-            return res.status(500).json({error: "Tente mais tarde", err})
+            return res.status(500).json({message: "Tente mais tarde", err})
         }
     }
 }

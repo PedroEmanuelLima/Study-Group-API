@@ -1,17 +1,19 @@
 const mongoose = require('mongoose');
 
 const GrupoSchema = mongoose.Schema({
-    nome: {
+    meta: {
         type: String,
-        require: true,
+        required: true,
     },
     dia: {
         type: String,
-        require: true,
+        enum: ["DOMINGO", "SEGUNDA-FEIRA", "TERÇA-FEIRA",
+            "QUARTA-FEIRA", "QUINTA-FEIRA", "SEXTA-FEIRA", "SÁBADO"],
+        required: true,
     },
     descricao: {
         type: String,
-        require: true,
+        required: true,
     },
 });
 

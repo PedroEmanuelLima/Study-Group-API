@@ -1,5 +1,5 @@
 const EstudanteRoutes = require('express').Router();
-const multer = require('../config/multer');
+const multer = require('../config/multerImage');
 const authMiddleware  = require('../middlewres/auth')
 
 const EstudanteController = require('../controllers/EstudanteController');
