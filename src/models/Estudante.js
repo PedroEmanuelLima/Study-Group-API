@@ -25,6 +25,6 @@ EstudanteSchema.pre('save', async function (next) {
     const hash =  await bcrypt.hash(this.senha, saltRounds)
     this.senha = hash
     next()
-})
+});
 
 module.exports = mongoose.model('Estudante', EstudanteSchema);
