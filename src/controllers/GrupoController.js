@@ -64,7 +64,7 @@ module.exports = {
         const id = req.params.id;
 
         try {
-            const myGroups = await GrupoEstudante.find({estudante: id}).populate("grupo");
+            const myGroups = await GrupoEstudante.find({estudante: id}, {_id: 0, grupo: 1}).populate('grupo');
             return res.status(200).json(myGroups);
         } catch (err) {
             return res.status(500).json({error: "Falha ao tentar localizar grupos. Tente mais tarde."})

@@ -16,3 +16,5 @@ const GrupoSchema = mongoose.Schema({
         required: true,
     },
 });
+
+module.exports = mongoose.model('Grupo', GrupoSchema);
