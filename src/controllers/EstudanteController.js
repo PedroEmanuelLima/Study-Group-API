@@ -191,7 +191,7 @@ module.exports = {
                 }
             );
 
-            res.status(200).json({message: "Nova senha enviada para email."});
+            return res.status(200).json({message: "Nova senha enviada para email."});
         } catch (err) {
             return res.status(500).json({message: "Tente mais tarde"})
         }
