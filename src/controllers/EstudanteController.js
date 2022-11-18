@@ -13,7 +13,7 @@ const generateToken = (params = {}) => {
 }
 
 const gerarSenhaAleatoria = () => {
-    var chars = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJLMNOPQRSTUVWXYZ!@#$%&*?";
+    var chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJLMNOPQRSTUVWXYZ";
     var passwordLength = 9;
     var password = "";
 
@@ -159,7 +159,7 @@ module.exports = {
             );
             estudante.senha = undefined;
 
-            res.status(200).json(estudante);
+            res.status(200).json({estudante});
         } catch (err) {
             return res.status(500).json({message: "Tente mais tarde", err})
         }
@@ -191,8 +191,7 @@ module.exports = {
                 }
             );
 
-            estudante.senha = undefined;
-            res.status(200).send(estudante);
+            res.status(200).json({message: "Nova senha enviada para email."});
         } catch (err) {
             return res.status(500).json({message: "Tente mais tarde"})
         }

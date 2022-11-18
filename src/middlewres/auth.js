@@ -9,17 +9,17 @@ module.exports = (req, res, next) => {
 
     const parts = authHeader.split(' ');
     if(!parts.length === 2){
-        return res.status(401).send({error: 'Token error'})
+        return res.status(401).json({message: 'Token error'})
     }
 
     const [ scheme, token ] = parts;
 
     if(!/^Bearer$/i.test(scheme)){ // Verificando se existe a palavra "Bearer" na parte scheme.
-        return res.status(401).send({ error: 'Token malformatted' });
+        return res.status(401).json({ message: 'Token malformatted' });
     }
 
     jwt.verify(token, process.env.SECRET, (err, decoded) => {
-        if (err) return res.status(401).send({error: 'Token invalid'});
+        if (err) return res.status(401).json({message: 'Token invalid'});
 
         req.alunoId = decoded.id;
         req.nome = decoded.nome;
