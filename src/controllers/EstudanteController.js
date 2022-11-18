@@ -13,7 +13,7 @@ const generateToken = (params = {}) => {
 }
 
 const gerarSenhaAleatoria = () => {
-    var chars = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJLMNOPQRSTUVWXYZ!@#$%&*?";
+    var chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJLMNOPQRSTUVWXYZ";
     var passwordLength = 9;
     var password = "";
 

@@ -16,9 +16,8 @@ try{
 app.use(express.json());
 app.use(cors());
 
-app.get('/', (req, res) => {
-    res.status(200).sendFile(path.join(__dirname, '/src/page/info.html'));
-});
+const authMiddleware  = require('./src/middlewres/auth');
+app.get('/', authMiddleware, (req, res) => res.status(200).json({token: "Valido"}));
 
 
 const EstudanteRoutes = require('./src/Routes/Estudante');
