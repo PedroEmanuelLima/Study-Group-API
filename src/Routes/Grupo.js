@@ -4,9 +4,10 @@ const authMiddleware  = require('../middlewres/auth')
 
 GrupoRoutes.use(authMiddleware);
 GrupoRoutes.post('/create', GrupoController.createGroup);
-GrupoRoutes.post('/entrar', GrupoController.joinGroup);
-GrupoRoutes.delete('/sair', GrupoController.leaveGroup);
-GrupoRoutes.get('/meus/:id', GrupoController.myGroups);
-GrupoRoutes.get('/:id', GrupoController.allGroups);
+GrupoRoutes.post('/join', GrupoController.joinGroup);
+GrupoRoutes.delete('/leave', GrupoController.leaveGroup);
+GrupoRoutes.get('/my/:id', GrupoController.myGroups);
+GrupoRoutes.get('/:id', GrupoController.group);
+GrupoRoutes.get('/all/:id', GrupoController.allGroups);
 
 module.exports = GrupoRoutes;

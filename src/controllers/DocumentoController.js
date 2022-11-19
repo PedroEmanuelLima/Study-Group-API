@@ -22,8 +22,9 @@ module.exports = {
             const base64 = Buffer.from(file.path).toString("base64");
             
             await Documento.create({grupo: id, documento: base64, descricao});
+            const documentos = await Documento.find({grupo: id});
             
-            return res.status(200).json({message: "Arquivo submetido com êxito."})
+            return res.status(200).json(documentos)
         }catch(err) {
             return res.status(500).json({message: "Falha. Tente mais tarde"})
         }

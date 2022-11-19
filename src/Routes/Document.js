@@ -6,6 +6,6 @@ const authMiddleware  = require('../middlewres/auth')
 DocumentoRoutes.use(authMiddleware);
 DocumentoRoutes.get('/:id', DocumentoController.allDocuments);
 DocumentoRoutes.get('/download/:id', DocumentoController.downloadDocument);
-DocumentoRoutes.post('/enviar/:id', multer.single('file'), DocumentoController.uploadDocument);
+DocumentoRoutes.post('/send/:id', multer.single('file'), DocumentoController.uploadDocument);
 
 module.exports = DocumentoRoutes;

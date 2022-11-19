@@ -72,6 +72,24 @@ module.exports = {
     },
 
     // Todos os grupos
+    async group(req, res) {
+       
+        const id = req.params.id;
+
+        try {
+            const grupo = await Grupo.findById({_id: id});
+        
+            res.status(200).json(grupo);
+    
+        } catch (error) {
+        
+            res.status(500).json({
+                message: "Grupo não encontrado!"
+            });
+        }  
+    },
+
+    // Todos os grupos
     async allGroups(req, res) {
        
         const id = req.params.id;
@@ -82,7 +100,7 @@ module.exports = {
             const grupos = await Grupo.find();
             const allGrupos = grupos.filter(g => !myGroupsId.includes(g._id.toString()));
         
-            res.status(200).json({ allGrupos });
+            res.status(200).json( allGrupos );
     
         } catch (error) {
         
