@@ -7,6 +7,7 @@ GrupoRoutes.post('/create', GrupoController.createGroup);
 GrupoRoutes.post('/entrar', GrupoController.joinGroup);
 GrupoRoutes.delete('/sair', GrupoController.leaveGroup);
 GrupoRoutes.get('/meus/:id', GrupoController.myGroups);
-GrupoRoutes.get('/:id', GrupoController.allGroups);
+GrupoRoutes.get('/:id', GrupoController.group);
+GrupoRoutes.get('grupos/:id', GrupoController.allGroups);
 
 module.exports = GrupoRoutes;
