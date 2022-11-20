@@ -4,7 +4,7 @@ const DocumentoSchema = mongoose.Schema(
     {
         documento: {
             type: String,
-            require
+            required: true
         },
         grupo: {
             type: mongoose.Schema.Types.ObjectId,
