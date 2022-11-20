@@ -35,8 +35,11 @@ module.exports = {
         const id = req.params.id;
         
         try {
+            res.setHeader('Content-Type', 'application/pdf');
+            res.setHeader('Content-Disposition', 'attachment; filename=quote.pdf');
             const doc = await Documento.findById({_id: id});
-            const download = Base64.atob(doc.documento)        
+            const download = Base64.atob(doc.documento);
+            console.log(download)
             res.download(download);
         }catch(err) {
             return res.status(500).json({message: "Falha. Tente mais tarde"})
