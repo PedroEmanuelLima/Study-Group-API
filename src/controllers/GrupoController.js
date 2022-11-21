@@ -1,4 +1,5 @@
 const Grupo = require('../models/Grupo');
+const Estudante = require('../models/Estudante');
 const GrupoEstudante = require('../models/Grupo_Estudante');
 
 
@@ -7,16 +8,19 @@ module.exports = {
 
     // Criar grupo
     async createGroup(req, res) {
-        
-        const { meta, descricao, dia } = req.body;
+        const { meta, descricao, dia, estudanteId } = req.body;
         try {
-   
+            // const estudante = await Estudante.findById({ _id: estudanteId });
             const grupo = await Grupo.create({ meta, descricao, dia });
+            await GrupoEstudante.create({
+                grupo: grupo._id,
+                estudante: estudanteId,
+            });
         
             res.status(200).json(grupo);
       
         } catch (error) {
-            
+            console.log(error)
             res.status(500).json({
               message: "Erro ao criar grupo!"
             });
@@ -71,7 +75,7 @@ module.exports = {
         }
     },
 
-    // Todos os grupos
+    // Grupos por ID
     async group(req, res) {
        
         const id = req.params.id;

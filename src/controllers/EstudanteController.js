@@ -65,7 +65,6 @@ module.exports = {
             }
 
             if (file) {
-                // create resource
 
                 const uploadResult = await cloudinary.uploader.upload(file.path,{ folder: "study-group"}, (error) => {
                     if(error) {
@@ -83,16 +82,14 @@ module.exports = {
                     resource: resource._id
                 }
             
-                const estudante = await Estudante.create(data);
+                await Estudante.create(data);
 
-                estudante.senha = undefined;
-                return res.status(200).json( estudante );
+                return res.status(200).json({ message: "Cadastrado com sucesso." });
             }
 
-            const estudante = await Estudante.create({ nome, email, senha });
+            await Estudante.create({ nome, email, senha });
 
-            estudante.senha = undefined;
-            return res.status(200).json( estudante );
+            return res.status(200).json({ message: "Cadastrado com sucesso." });
         }catch(err) {
             return res.status(401).json({ message: 'Falha na criação de novo estudante', err });
         }

@@ -15,16 +15,11 @@ module.exports = {
     
     // submeter documento em um grupo
     async uploadDocument(req, res) {
-        const id = req.params.id;
-        const file = req.file;
-        const descricao = req.body.descricao || file.originalname;
+        const {file, descricao, grupoId} = req.body;
         try {
-            const base64 = Buffer.from(file.path).toString("base64");
+            await Documento.create({grupo: grupoId, documento: file, descricao});
             
-            await Documento.create({grupo: id, documento: base64, descricao});
-            const documentos = await Documento.find({grupo: id});
-            
-            return res.status(200).json(documentos)
+            return res.status(200).json({message: "Submetido com sucesso."})
         }catch(err) {
             return res.status(500).json({message: "Falha. Tente mais tarde"})
         }
@@ -35,11 +30,11 @@ module.exports = {
         const id = req.params.id;
         
         try {
-            res.setHeader('Content-Type', 'application/pdf');
-            res.setHeader('Content-Disposition', 'attachment; filename=quote.pdf');
             const doc = await Documento.findById({_id: id});
-            const download = Base64.atob(doc.documento);
-            res.download(download);
+            res.setHeader('Content-Type', 'application/pdf');
+            res.setHeader('Content-Disposition', `attachment; filename=${doc._id}.pdf`);
+            const download = Base64.atob(doc);
+            res.status(200).download(download);
         }catch(err) {
             return res.status(500).json({message: "Falha. Tente mais tarde"})
         }
