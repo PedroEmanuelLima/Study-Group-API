@@ -23,21 +23,6 @@ module.exports = {
         }catch(err) {
             return res.status(500).json({message: "Falha. Tente mais tarde"})
         }
-    },
-
-    // Obter documento em um grupo
-    async downloadDocument(req, res) {
-        const id = req.params.id;
-        
-        try {
-            const doc = await Documento.findById({_id: id});
-            res.setHeader('Content-Type', 'application/pdf');
-            res.setHeader('Content-Disposition', `attachment; filename=${doc._id}.pdf`);
-            const download = Base64.atob(doc);
-            res.status(200).download(download);
-        }catch(err) {
-            return res.status(500).json({message: "Falha. Tente mais tarde"})
-        }
-    },
+    }
 }
 
