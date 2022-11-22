@@ -50,11 +50,11 @@ module.exports = {
     async leaveGroup(req, res) {
         
         const {estudanteId, grupoId} = req.body;
-
+        
         try {
             const deletecao = await GrupoEstudante.deleteOne({estudante: estudanteId, grupo: grupoId});
-            
-            if (!deletecao.acknowledged) return res.status(402).json({message: "Inacessivel no omento."});
+        
+            if (!deletecao.acknowledged) return res.status(402).json({message: "Inacessivel no momento."});
             return res.status(200).json({message: "Exito em sair de grupo."});
 
         }catch(err) {
