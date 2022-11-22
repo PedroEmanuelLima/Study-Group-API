@@ -2,7 +2,11 @@ const mongoose = require('mongoose');
 
 const DocumentoSchema = mongoose.Schema(
     {
-        documento: {
+        cloudinary_id: {
+            type: String,
+            required: true
+        },
+        secure_url: {
             type: String,
             required: true
         },
