@@ -125,6 +125,7 @@ module.exports = {
                 estudante = await (await Estudante.findByIdAndUpdate({_id: estudanteId}, {resource: resource._id}, {rawResult: true})).value;
             }
 
+            estudante = await Estudante.findById({_id: estudanteId}).populate("resource");
             estudante.senha = undefined;
             res.status(200).json(estudante);
         } catch (err) {
