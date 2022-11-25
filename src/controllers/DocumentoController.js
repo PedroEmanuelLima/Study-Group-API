@@ -30,8 +30,10 @@ module.exports = {
                 descricao: descricao,
                 grupo: grupoId
             });
+
+            const arquivos = await Documento.find({grupo: grupoId}).sort('-post');
             
-            return res.status(200).json({message: "Submetido com sucesso."})
+            return res.status(200).json({arquivos, message: "Submetido com sucesso."})
         }catch(err) {
             return res.status(500).json({message: "Falha. Tente mais tarde"})
         }
